@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'user')}">
+
+<body>
+    <div th:each="commit : ${commits}">
+        <div style="
+        border: 1px solid #999;
+        display: block;
+        padding: 20px;">
+            <h4><a th:href="@{'/' + ${username} + '/' + ${projectUrl} + '/'
+                + ${branchName} + '/commit/' + ${commit.id}}" th:text="${commit.name}">
+                Onions</a></h4>
+            <h6 th:text="'Commited by ' + ${commit.creator.username}">Onions</h6>
+            <h6 th:text="'Created at ' + ${commit.createdAt}">Onions</h6>
+            <h5 th:text="${commit.description}">Onions</h5>
+        </div>
+        <br>
+    </div>
+</body>
+</html>

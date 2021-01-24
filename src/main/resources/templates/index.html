@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'home')}">
+
+<body>
+
+    <table class="table table-striped">
+        <tr>
+            <th>USER</th>
+            <th>EMAIL</th>
+            <th>ID</th>
+            <th>DATE</th>
+        </tr>
+        <tr th:each="user : ${users}">
+            <td><a th:text="${user.username}" th:href="@{'/' + ${user.username} }">Onions</a></td>
+            <td th:text="${user.email}">Onions</td>
+            <td th:text="${user.id}">Onions</td>
+            <td th:text="${user.createdAt}">Onions</td>
+        </tr>
+    </table>
+
+
+</body>
+</html>

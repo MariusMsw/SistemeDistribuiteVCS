@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'user')}">
+
+<body>
+    <h1><span th:text="${project.title}">Project Title</span></h1>
+    <h5><span th:text="${project.description}">Project Description</span></h5>
+
+    <table class="table table-striped">
+        <tr>
+            <th><a th:text="${commitsNumber} + ' commits'" th:href="@{'/' + ${userRequested.username} + '/' +
+            ${project.url} + '/commits/' + ${currentBranch} }">commits</a></th>
+            <th>
+                <details>
+                    <summary th:text="${currentBranch}"></summary>
+                    <ul>
+                        <li th:each="branch : ${branches}">
+                            <a th:text="${branch.name}" th:href="@{'/' + ${userRequested.username} + '/' +
+                             ${project.url} + '/tree/' + ${branch.name}}">
+
+                            </a>
+                        </li>
+                    </ul>
+                </details>
+            </th>
+            <th th:if="${userRequested.username == usernameLoggedIn}"><a th:href="@{'/' + ${userRequested.username} +
+            '/' + ${project.url} + '/settings'}">Settings</a></th>
+        </tr>
+    </table>
+    <div th:if="${currentBranch != 'master'}">
+        <div th:if="${newBranchHasChanges} == true">
+            <form th:action="@{'/' + ${userRequested.username} + '/' + ${project.url} + '/'
+            + ${currentBranch} + '/mergetomaster' }" method="get">
+                <input type="hidden" name="_method" value="button" />
+                <button type="submit" id="submitButton" class="btn btn-success">Merge to master</button>
+            </form>
+        </div>
+    </div>
+
+    <br>
+    <h3><a th:href="@{'/' + ${userRequested.username} + '/' + ${project.url} + '/' + ${currentBranch} +
+    '/addcommit'}">Create new commit</a></h3>
+
+    <table class="table table-striped">
+        <tr>
+            <th>File</th>
+            <th>Last Commit</th>
+        </tr>
+        <tr th:each="file : ${files}">
+            <td><a th:text="${file.fileName}" th:href="@{'/' + ${userRequested.username} + '/' + ${project.url} +
+            '/' + ${currentBranch} + '/file/' + ${file.fileName}}"></a></td>
+            <td th:text="${file.lastCommit.name}">Onions</td>
+        </tr>
+    </table>
+
+</body>
+</html>
